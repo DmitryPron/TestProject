@@ -1,47 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MessageService.Swagger;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MessageService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        /// <summary>Initializes a new instance of the <see cref="Startup"/> class.</summary>
+        /// <param name="configuration">Конфигурация <see cref="IConfiguration"/>.</param>
+        /// <param name="hostingEnvironment">Среда <see cref="IConfiguration"/>.</param>
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            HostingEnvironment = hostingEnvironment;
         }
 
-        public IConfiguration Configuration { get; }
+        /// <summary>Среда <see cref="IHostingEnvironment"/>.</summary>
+        private IHostingEnvironment HostingEnvironment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>Конфигурация <see cref="IConfiguration"/>.</summary>
+        private IConfiguration Configuration { get; }
+
+        /// <summary>This method gets called by the runtime. Use this method to add services to the container.</summary>
+        /// <param name="services"><see cref="IServiceCollection"/>.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true);
+
+            if (!HostingEnvironment.IsProduction())
+            {
+                services.AddOwnSwagger();
+            }
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <summary>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</summary>
+        /// <param name="app"><see cref="IApplicationBuilder"/>.</param>
+        /// <param name="provider"><see cref="IApiVersionDescriptionProvider"/></param>
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
-            if (env.IsDevelopment())
+            app.UseHealthChecks("/health");
+            app.UseAuthentication();
+
+            if (!HostingEnvironment.IsProduction())
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseOwnSwagger(Configuration, provider);
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
