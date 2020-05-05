@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TestProject1\\MessageService\\MessageService\\MessageService.csproj": {}
+    "D:\\TestProject\\MessageService\\MessageService\\MessageService.csproj": {}
   },
   "projects": {
-    "D:\\TestProject1\\MessageService\\MessageService\\MessageService.csproj": {
+    "D:\\TestProject\\MessageService\\MessageService\\MessageService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TestProject1\\MessageService\\MessageService\\MessageService.csproj",
+        "projectUniqueName": "D:\\TestProject\\MessageService\\MessageService\\MessageService.csproj",
         "projectName": "MessageService",
-        "projectPath": "D:\\TestProject1\\MessageService\\MessageService\\MessageService.csproj",
+        "projectPath": "D:\\TestProject\\MessageService\\MessageService\\MessageService.csproj",
         "packagesPath": "C:\\Users\\Дмитрий\\.nuget\\packages\\",
-        "outputPath": "D:\\TestProject1\\MessageService\\MessageService\\obj\\",
+        "outputPath": "D:\\TestProject\\MessageService\\MessageService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -42,6 +42,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.1.0, )"

@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace MessageService
 {
@@ -34,6 +27,7 @@ namespace MessageService
             services.AddControllers();
             services.RegisterSwagger();
             services.AddMvc(x => x.EnableEndpointRouting = false);
+            services.AddDbContextPool<Context>(o => o.UseSqlServer("Persist Security Info=False;Integrated Security=true;Initial Catalog=Test_db; server=(local);"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MessageService.Controllers
@@ -17,16 +18,28 @@ namespace MessageService.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly Context _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, Context context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public async  Task<IEnumerable<WeatherForecast>> Get()
         {
             var rng = new Random();
+            try
+            {
+                var z = await _context.TestObjects.FirstOrDefaultAsync();
+                await _context.TestObjects.AddAsync(new TestObject("Test", 5));
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var k = 0;
+            }
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
