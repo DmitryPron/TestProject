@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MessageService</name>
+    </assembly>
+    <members>
+        <member name="T:MessageService.HomeController">
+            <inheritdoc />
+        </member>
+        <member name="M:MessageService.HomeController.Index">
+            <summary>Редирект на swagger.</summary>
+            <returns>ActionResult.</returns>
+        </member>
+        <member name="T:MessageService.EnvironmentConfig">
+            <summary>Конфигурация среды.</summary>
+        </member>
+        <member name="P:MessageService.EnvironmentConfig.ProjectKey">
+            <summary>Получить код проекта.</summary>
+            <returns>Возвращает строку.</returns>
+        </member>
+        <member name="P:MessageService.EnvironmentConfig.ServiceName">
+            <summary>Получить имя микросервиса.</summary>
+            <returns>Возвращает строку.</returns>
+        </member>
+        <member name="P:MessageService.EnvironmentConfig.EnvironmentName">
+            <summary>Получить имя переменной среды.</summary>
+            <returns>Возвращает строку.</returns>
+        </member>
+        <member name="P:MessageService.EnvironmentConfig.IsLocal">
+            <summary>Получить проверку на запуск в локальной среде.</summary>
+            <returns>Возвращает true, если запуск произошел в локальной среде.</returns>
+        </member>
+        <member name="M:MessageService.Program.CreateWebHostBuilder(System.String[])">
+            <summary>CreateWebHostBuilder.</summary>
+            <param name="args">args.</param>
+            <returns>IWebHostBuilder.</returns>
+        </member>
+        <member name="T:MessageService.StartupSwagger">
+            <summary>Расширение для swagger.</summary>
+        </member>
+        <member name="M:MessageService.StartupSwagger.RegisterSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>Зарегистрировать swagger.</summary>
+            <param name="services">services.</param>
+            <returns>Коллекция сервисов.</returns>
+        </member>
+        <member name="M:MessageService.StartupSwagger.RegisterSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>Зарегистрировать swagger.</summary>
+            <param name="app">app.</param>
+            <returns>builder.</returns>
+        </member>
+    </members>
+</doc>
